@@ -1,0 +1,22 @@
+# Local env (never commit)
+.env
+
+# Virtualenv lives at algos/.venv — recreate with pip install -r requirements.txt
+.venv/
+venv/
+
+# Test / tool caches
+.pytest_cache/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
+
+# Runtime logs & session tapes (regenerated on each run)
+trades.jsonl
+breadth.jsonl
+sessions/*_tape.jsonl
+sessions/*_meta.json
+
+# Chart output
+*.png
