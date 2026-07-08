@@ -4,3 +4,4 @@ python-dotenv>=1.0.0
 pytest>=7.0
 matplotlib>=3.8
 pandas>=2.0
+highlowticker-algo-feed>=0.1.0

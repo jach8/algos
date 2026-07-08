@@ -25,3 +25,6 @@ algo_spy/*.png
 
 # Chart output anywhere in repo
 *.png
+
+# Local WIP / experiments (not published)
+_local/

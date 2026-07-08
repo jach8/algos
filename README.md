@@ -6,6 +6,9 @@ This repo ships:
 
 - **`core/`** — shared runtime (websocket feed loop, timestamps, session reporting)
 - **`algo_spy/`** — breadth-first SPY strategy (`spy_breadth_ema_v2`)
+- **`strategy_simple.py`** — minimal teaching example (~95 lines, one-file loop)
+- **`breadth_momentum.py`** — leader-continuation momentum on market breadth
+- **`notify_discord/`** — Discord webhook alerts on new-high/low milestones
 
 ## Prerequisites
 
@@ -35,8 +38,11 @@ See **[howtorun.md](howtorun.md)** for the full workflow (replay, charts, tests)
 
 ```
 algos/
-├── core/           # Shared websocket client + reporting
-├── algo_spy/       # SPY breadth + optional EMA strategy
+├── core/               # Shared websocket client + reporting
+├── algo_spy/           # SPY breadth + optional EMA strategy
+├── notify_discord/     # Discord milestone alerts
+├── strategy_simple.py  # Minimal one-file strategy example
+├── breadth_momentum.py # Breadth-filtered leader momentum
 ├── requirements.txt
 ├── howtorun.md
 └── README.md
@@ -54,6 +60,16 @@ Market **breadth score** from HighLowTicker `TAPE_EVENT` rate bars drives entrie
 | Paper fills | Commission + slippage + spread model in `execution.py` |
 
 Strategy details: [algo_spy/readme.md](algo_spy/readme.md)
+
+## Examples (lighter weight)
+
+| File | Purpose | Run |
+|------|---------|-----|
+| `strategy_simple.py` | Smallest full algo loop (read TAPE_EVENT → emit ALGO_SIGNAL) | `python strategy_simple.py` |
+| `breadth_momentum.py` | Multi-symbol momentum with market breadth filter | `python breadth_momentum.py` |
+| `notify_discord/` | Push Discord alerts on high/low count milestones | See [notify_discord/README.md](notify_discord/README.md) |
+
+`breadth_momentum.py` uses the [`highlowticker-algo-feed`](https://pypi.org/project/highlowticker-algo-feed/) package (`pip install highlowticker-algo-feed`).
 
 ## Creating another algo
 
