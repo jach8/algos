@@ -6,8 +6,9 @@ This repo ships:
 
 - **`core/`** — shared runtime (websocket feed loop, timestamps, session reporting)
 - **`algo_spy/`** — breadth-first SPY strategy (`spy_breadth_ema_v2`)
+- **`algo_momentum/`** — realtime multi-symbol momentum leaders (`momentum_leaders_v1`)
 - **`strategy_simple.py`** — minimal teaching example (~95 lines, one-file loop)
-- **`breadth_momentum.py`** — leader-continuation momentum on market breadth
+- **`breadth_momentum.py`** — lighter leader-continuation demo (naive last-price PnL)
 - **`notify_discord/`** — Discord webhook alerts on new-high/low milestones
 
 ## Prerequisites
@@ -40,9 +41,10 @@ See **[howtorun.md](howtorun.md)** for the full workflow (replay, charts, tests)
 algos/
 ├── core/               # Shared websocket client + reporting
 ├── algo_spy/           # SPY breadth + optional EMA strategy
+├── algo_momentum/      # Multi-symbol realtime momentum (realistic fills)
 ├── notify_discord/     # Discord milestone alerts
 ├── strategy_simple.py  # Minimal one-file strategy example
-├── breadth_momentum.py # Breadth-filtered leader momentum
+├── breadth_momentum.py # Lighter breadth-filtered demo (naive PnL)
 ├── requirements.txt
 ├── howtorun.md
 └── README.md
@@ -61,15 +63,32 @@ Market **breadth score** from HighLowTicker `TAPE_EVENT` rate bars drives entrie
 
 Strategy details: [algo_spy/readme.md](algo_spy/readme.md)
 
+## algo_momentum (summary)
+
+Realtime **leader-continuation** across names printing new highs + volume spikes, gated by market breadth.
+
+| Item | Value |
+|------|-------|
+| Algo ID | `momentum_leaders_v1` |
+| Symbols | Dynamic — watches open positions + seed (`SPY`) |
+| Entry | `new_high` + `volume_spike` on a persistent/hot leader |
+| Paper fills | Same commission + slippage + spread model as `algo_spy` |
+
+```bash
+python -m algo_momentum.main
+```
+
+Details: [algo_momentum/readme.md](algo_momentum/readme.md)
+
 ## Examples (lighter weight)
 
 | File | Purpose | Run |
 |------|---------|-----|
 | `strategy_simple.py` | Smallest full algo loop (read TAPE_EVENT → emit ALGO_SIGNAL) | `python strategy_simple.py` |
-| `breadth_momentum.py` | Multi-symbol momentum with market breadth filter | `python breadth_momentum.py` |
+| `breadth_momentum.py` | Multi-symbol momentum demo (last-price PnL, teaching) | `python breadth_momentum.py` |
 | `notify_discord/` | Push Discord alerts on high/low count milestones | See [notify_discord/README.md](notify_discord/README.md) |
 
-`breadth_momentum.py` uses the [`highlowticker-algo-feed`](https://pypi.org/project/highlowticker-algo-feed/) package (`pip install highlowticker-algo-feed`).
+`breadth_momentum.py` uses the [`highlowticker-algo-feed`](https://pypi.org/project/highlowticker-algo-feed/) package (`pip install highlowticker-algo-feed`). Prefer **`algo_momentum`** for session paper trading with realistic PnL.
 
 ## Creating another algo
 

@@ -22,6 +22,7 @@ algo_spy/breadth.jsonl
 algo_spy/sessions/*_tape.jsonl
 algo_spy/sessions/*_meta.json
 algo_spy/*.png
+algo_momentum/trades.jsonl
 
 # Chart output anywhere in repo
 *.png
